@@ -208,14 +208,13 @@
         })
       })
       console.log('doCheckAllTodos todo status : ', res.status)
-      if (res.status != 200) {
-        const json = await res.json()
-        .then(json => {console.log('doCheckAllTodos count : ', json)})
-        .catch(error => {
+      const json = await res.json()
+      .then(json => {console.log('doCheckAllTodos count : ', json.count)})
+      .catch(error => {
+          if (res.status != 200) {
             console.error('doCheckAllTodos fetch problem:', error)
-        })
-      }
-
+          } 
+      })
     }
 
     const checkAllTodos = (completed: boolean) => {
@@ -225,9 +224,32 @@
       $alert = `${completed ? 'Checked' : 'Unchecked'} ${todos.length} todos`
     }
 
+
+    async function doDeleteAllCompletedTodos () {
+      let where = JSON.stringify({
+        "isComplete": true
+      })
+      const res = await fetch('http:///mint20-loopback4:3000/todos?where=' + where, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+          }
+      })
+      console.log('doDeleteAllCompletedTodos todo status : ', res.status)
+      const json = await res.json()
+      .then(json => {console.log('doDeleteAllCompletedTodos count : ', json.count)})
+      .catch(error => {
+        if (res.status != 200) {
+          console.error('doDeleteAllCompletedTodos fetch problem:', error)
+        }
+      })      
+    }
+
+
     const removeCompletedTodos = () => {
       $alert = `Removed ${todos.filter(t => t.isComplete).length} todos`
       todos = todos.filter(t => !t.isComplete)
+      doDeleteAllCompletedTodos()
     }
 
 /*    onMount( () => {

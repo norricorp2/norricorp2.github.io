@@ -1,5 +1,6 @@
 <script lang='ts'>
-    import { createEventDispatcher } from 'svelte'
+    import { createEventDispatcher, afterUpdate } from 'svelte'
+
     import type { TodoType } from '../types/todo.type'
 
     const dispatch = createEventDispatcher()
@@ -19,6 +20,18 @@
     // note that the t: TodoType has to be in own brackets
     $: completedTodos = todos.filter((t: TodoType) => t.isComplete).length
 
+
+
+    afterUpdate(() => {
+      console.log('afterupdate')
+      if (completedTodos == todos.length) {
+        console.log('MoreActions, 2 completed is : ', completed)
+        completed = false
+      }
+      else if (completedTodos == 0) {
+        completed = true
+      }
+    })
   </script>
   
 <div class="btn-group">
