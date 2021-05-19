@@ -8,12 +8,12 @@
   import type { TodoType } from '../types/todo.type'
   import { Filter } from '../types/filter.enum'
   import { onMount } from 'svelte'
+  import { authToken } from '../stores'
 
 
   /* So with 'export let todos = []', we are telling Svelte that our Todos.svelte component 
   will accept a todos attribute, which when omitted will be initialized to an empty array. */
     export let todos: TodoType[] = []
-    let newTodoName = ''
 
 //    console.log('into Todos.svelte : ', todos)
 //    console.log('Todos.svelte with length of : ', todos.length)
@@ -23,7 +23,7 @@
     let todosStatus: TodosStatus                   // reference to TodosStatus instance
 
     let newTodoId: number
-    $: newTodoId = todos.length ? Math.max(...todos.map(t => t.id)) + 1 : 1
+//    $: newTodoId = todos.length ? Math.max(...todos.map(t => t.id)) + 1 : 1
 /*    $: {
       if (totalTodos === 0) {
         newTodoId = 1;
@@ -37,6 +37,7 @@
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
+            "Authorization": "Bearer " + $authToken,
           },
       })
       
@@ -54,31 +55,20 @@
     function removeTodo(todo: TodoType) {
       todos = todos.filter(t => t.id !== todo.id)
       doDelete(todo)
-/*       async () => {
-        const response = await fetch("http:///mint20-loopback4:3000/todos/" + todo.id, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-
-        const parsed = await response.json()
-        .catch(error => {
-            console.error('RemoveTodo fetch problem:', error)
-          })
-      } */
       todosStatus.focus()             // give focus to status heading
       $alert = `Todo '${todo.title}' has been deleted`
     }
 
-    async function doPost (id: number, name: string) {
+//    async function doPost (id: number, name: string) {
+    async function doPost (name: string) {
       const res = await fetch('http:///mint20-loopback4:3000/todos/', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
+            "Authorization": "Bearer " + $authToken,
           },
           body: JSON.stringify({
-            "id": newTodoId, 
+//            "id": newTodoId, 
             "title": name, 
             "isComplete": false
         })
@@ -86,9 +76,13 @@
       
       if (res.status != 204) {
         const json = await res.json()
-        .then(json => {console.log('add todo : ', json)})
+        .then(json => {
+            console.log('add todo : ', json)
+            console.log('with id of : ', json.id)
+            newTodoId = json.id
+        })
         .catch(error => {
-            console.error('AddTodo fetch problem:', error)
+            console.error('AddTodo PUT problem:', error)
         })
       }
 
@@ -100,25 +94,10 @@
       //todos = todos
       // doing this creates a new array
       console.log('2 into Todos.svelte : ', todos)
-      todos = [...todos, { id: newTodoId, title: name, isComplete: false }]
-      doPost(todos.length, name)
-/*       async () => {
-        const response = await fetch("http:///mint20-loopback4:3000/todos", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ "id": newTodoId, "title": name, "isComplete": false }),
-        })
-
-        const parsed = await response.json()
-        .catch(error => {
-            console.error('AddTodo fetch problem:', error)
-          })
-      } */
+      doPost(name)
       $alert = `Todo '${name}' has been added`
-      // finally reset variable
-      newTodoName = ''
+      // finally update array
+      todos = [...todos, { id: newTodoId, title: name, isComplete: false }]
     }
 
     async function doPut (todo: TodoType) {
@@ -126,6 +105,7 @@
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
+            "Authorization": "Bearer " + $authToken,
           },
           body: JSON.stringify({
             "title": todo.title, 
@@ -137,7 +117,7 @@
         const json = await res.json()
         .then(json => {console.log('update todo : ', json)})
         .catch(error => {
-            console.error('UpdateTodo fetch problem:', error)
+            console.error('UpdateTodo doPut problem:', error)
         })
       }
 
@@ -148,24 +128,9 @@
       if (todos[i].title !== todo.title)            $alert = `todo '${todos[i].title}' has been renamed to '${todo.title}'`
       if (todos[i].isComplete !== todo.isComplete)  $alert = `todo '${todos[i].title}' marked as ${todo.isComplete ? 'completed' : 'active'}`
       todos[i] = { ...todos[i], ...todo }
-      console.log('UpdateTodo: about to call fetch')
+      console.log('UpdateTodo: about to call doPut with token of : ', $authToken)
       doPut(todo)
-/*       async () => {
-        const response = await fetch("http:///mint20-loopback4:3000/todos/" + todo.id, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ "title": todo.title, "isComplete": todo.isComplete }),
-        })
-        console.log('waiting for response : ', response)
-        const parsed = await response.json()
-        .then(parsed => {console.log('update todo : ', parsed)})
-        .catch(error => {
-          console.error('UpdateTodo fetch problem:', error)
-        })
-      } */
-      console.log('UpdateTodo: completed fetch')
+      console.log('UpdateTodo: completed doPut')
     }
 
      let filter: Filter = Filter.ALL
@@ -202,6 +167,7 @@
         method: 'PATCH',
         headers: {
             "Content-Type": "application/json",
+            "Authorization": "Bearer " + $authToken,
           },
           body: JSON.stringify({
             "isComplete": completed
@@ -212,7 +178,7 @@
       .then(json => {console.log('doCheckAllTodos count : ', json.count)})
       .catch(error => {
           if (res.status != 200) {
-            console.error('doCheckAllTodos fetch problem:', error)
+            console.error('doCheckAllTodos HTTP problem:', error)
           } 
       })
     }
@@ -233,14 +199,15 @@
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
-          }
+            "Authorization": "Bearer " + $authToken,
+          },
       })
       console.log('doDeleteAllCompletedTodos todo status : ', res.status)
       const json = await res.json()
       .then(json => {console.log('doDeleteAllCompletedTodos count : ', json.count)})
       .catch(error => {
         if (res.status != 200) {
-          console.error('doDeleteAllCompletedTodos fetch problem:', error)
+          console.error('doDeleteAllCompletedTodos HTTP problem:', error)
         }
       })      
     }
@@ -252,11 +219,44 @@
       doDeleteAllCompletedTodos()
     }
 
-/*    onMount( () => {
-     console.log('Todos length - mounted : ', todos.length)
-  })  */
 
-  //  $: console.log('newTodoName: ', newTodoName)
+    async function getAllTodos () {
+      console.log('auth token is : ', $authToken)
+      const res = await fetch('http:///mint20-loopback4:3000/todos', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + $authToken,
+      },
+      })
+
+      const json = await res.json()
+      .catch(error => {
+            console.error('getAllTodos fetch problem:', error)
+      })
+      
+      console.log('todolist : ', json)
+      json.forEach(element  => {
+        let t: TodoType = { id: 0, title: '0', isComplete: true }
+        t.id = element.id
+        t.title = element.title
+        if (element.isComplete === undefined) {
+          t.isComplete = false
+        }
+        else {
+          t.isComplete = element.isComplete
+        }
+        // this updates the DOM
+        todos = [...todos,t]
+      })
+  //    console.log('completed mount : ', todos)
+    }
+
+    onMount( () => {
+     getAllTodos()
+  })  
+
+
 </script>
 
 <h1>Svelte To-Do list</h1>

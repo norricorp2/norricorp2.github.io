@@ -2,38 +2,112 @@
 	import Todos from './components/Todos.svelte'
 	import Alert from './components/Alert.svelte'
   import { onMount } from 'svelte'
-//	import { todos } from './stores'
+	import { authToken } from './stores'
   import type { TodoType } from './types/todo.type'
 
+  let password = ""
+	let email = ""
+	let error
+	let authorised = false
   let todos: TodoType[] = []
 
-  onMount(async () => {
-		const res = await fetch('http:///mint20-loopback4:3000/todos')
-		const json = await res.json()
-    .catch(error => {
-          console.error('OnMountTodo fetch problem:', error)
-    })
-    
-//		console.log('todolist : ', json)
-    json.forEach(element  => {
-      let t: TodoType = { id: 0, title: '0', isComplete: true }
-      t.id = element.id
-      t.title = element.title
-      if (element.isComplete === undefined) {
-        t.isComplete = false
-      }
-      else {
-        t.isComplete = element.isComplete
-      }
-      // this updates the DOM
-      todos = [...todos,t]
-    })
-//    console.log('completed mount : ', todos)
-	})
+
+	const handleLogin = async () => {
+	  const response = await fetch("http:///mint20-loopback4:3000/users/login", {
+		method: "POST",
+		headers: {
+		  "Content-Type": "application/json",
+		},
+		body: JSON.stringify({ "email": email, "password": password }),
+	  })
+  
+	  const parsed = await response.json()
+
+//	  console.log(parsed)
+//	  console.log("NORRIS: reply received")
+ 	  if (parsed.token) {
+      $authToken = parsed.token
+      authorised = true
+      email = ""
+      password = ""
+	  } else {
+      console.log(parsed.error)
+      error = parsed.error
+      email = ""
+      password = ""
+	  } 
+
+	  console.log("NORRIS: " + $authToken)
+  }
+
+/*   async function doLogout () {
+      const res = await fetch('http:///mint20-loopback4:3000/users/logout', {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            "isComplete": completed
+        })
+      })
+      console.log('doLogout status : ', res.status)
+      const json = await res.json()
+      .catch(error => {
+          if (res.status != 204) {
+            console.error('doLogout fetch problem:', error)
+          } 
+      })
+    } */
+
+	function logout() {
+		$authToken = ''
+		authorised = false
+
+  }
+
 
 </script>
   
-  <Alert />
-  <Todos bind:todos={todos} />
+  <style>
+	  .error-mess {
+		  color: red;
+	  }
+
+  </style>
+
   
+
+	{#if !authorised}
+  <h2>Login to Loopback Todo</h2>
+	<br>
+  	<div class="todoapp stack-large">
+    <form on:submit|preventDefault="{handleLogin}" method="post">
+      <label>
+        Email:
+        <input type="email" bind:value="{email}" />
+      </label>
+      <label>
+        Password:
+        <input type="password" bind:value="{password}" />
+      </label>
+      <button type="submit" disabled={password == "" || email==""} class="btn">Login</button>
+    </form>
+    {#if error}
+    	<p class="error-mess">Status code {error.statusCode} <br> {error.message}</p>
+    {/if}
+  </div>
+  {/if}
+
   
+  {#if authorised}
+<!--    <p>auth token is {$authToken}</p> -->
+    <h2>Loopback Todo</h2>
+    <br>
+    <div>
+      <button class="btn" on:click={logout}>Log Out</button>
+    </div>
+
+    <Alert />
+    <Todos bind:todos={todos} />
+
+  {/if}
