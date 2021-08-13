@@ -10,10 +10,11 @@
 	let error
 	let authorised = false
   let todos: TodoType[] = []
-
+  //let url = "http:///mint20-loopback4:3000/"
+  let url = "http://88.111.150.77:3000/"
 
 	const handleLogin = async () => {
-	  const response = await fetch("http:///mint20-loopback4:3000/users/login", {
+	  const response = await fetch(url + 'users/login', {
 		method: "POST",
 		headers: {
 		  "Content-Type": "application/json",

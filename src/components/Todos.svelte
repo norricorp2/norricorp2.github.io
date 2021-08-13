@@ -10,7 +10,8 @@
   import { onMount } from 'svelte'
   import { authToken } from '../stores'
 
-
+  //  let url = "http:///mint20-loopback4:3000/"
+    let url = "http:///88.111.150.77:3000/"
   /* So with 'export let todos = []', we are telling Svelte that our Todos.svelte component 
   will accept a todos attribute, which when omitted will be initialized to an empty array. */
     export let todos: TodoType[] = []
@@ -33,7 +34,7 @@
     }
 */
     async function doDelete (todo: TodoType) {
-      const res = await fetch('http:///mint20-loopback4:3000/todos/' + todo.id, {
+      const res = await fetch(url + 'todos/' + todo.id, {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
@@ -61,7 +62,7 @@
 
 //    async function doPost (id: number, name: string) {
     async function doPost (name: string) {
-      const res = await fetch('http:///mint20-loopback4:3000/todos/', {
+      const res = await fetch(url + "todos/", {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -101,7 +102,7 @@
     }
 
     async function doPut (todo: TodoType) {
-      const res = await fetch('http:///mint20-loopback4:3000/todos/' + todo.id, {
+      const res = await fetch(url + 'todos/' + todo.id, {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
@@ -163,7 +164,7 @@
       let where = JSON.stringify({
         "isComplete": !completed
       })
-      const res = await fetch('http:///mint20-loopback4:3000/todos?where=' + where, {
+      const res = await fetch(url + 'todos?where=' + where, {
         method: 'PATCH',
         headers: {
             "Content-Type": "application/json",
@@ -195,7 +196,7 @@
       let where = JSON.stringify({
         "isComplete": true
       })
-      const res = await fetch('http:///mint20-loopback4:3000/todos?where=' + where, {
+      const res = await fetch(url + 'todos?where=' + where, {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
@@ -222,7 +223,7 @@
 
     async function getAllTodos () {
       console.log('auth token is : ', $authToken)
-      const res = await fetch('http:///mint20-loopback4:3000/todos', {
+      const res = await fetch(url + 'todos', {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
