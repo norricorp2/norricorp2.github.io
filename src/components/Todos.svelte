@@ -10,8 +10,8 @@
   import { onMount } from 'svelte'
   import { authToken } from '../stores'
 
-  //  let url = "http:///mint20-loopback4:3000/"
-    let url = "http:///88.111.150.77:3000/"
+  //  let url = "https:///mint20-loopback4:3000/"
+    let url = "https:///88.111.150.77:3000/"
   /* So with 'export let todos = []', we are telling Svelte that our Todos.svelte component 
   will accept a todos attribute, which when omitted will be initialized to an empty array. */
     export let todos: TodoType[] = []
