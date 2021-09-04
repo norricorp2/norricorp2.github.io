@@ -2153,6 +2153,9 @@ var app = (function () {
     //import { onMount } from 'svelte'
     const alert = writable('Welcome to the To-Do list app!');
     const authToken = writable('');
+    const userId = writable('');
+    const urlInit = writable("https://mint20-loopback4:3000/");
+    //  export const url = writable("https://88.111.150.77:3000/")
     // read the database now
     /* let initialTodos: TodoType[] = []
 
@@ -2204,11 +2207,11 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[26] = list[i];
+    	child_ctx[28] = list[i];
     	return child_ctx;
     }
 
-    // (277:6) {:else}
+    // (353:6) {:else}
     function create_else_block(ctx) {
     	let li;
 
@@ -2216,7 +2219,7 @@ var app = (function () {
     		c: function create() {
     			li = element("li");
     			li.textContent = "Nothing to do here!";
-    			add_location(li, file$2, 277, 8, 10354);
+    			add_location(li, file$2, 353, 8, 13216);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, li, anchor);
@@ -2230,14 +2233,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(277:6) {:else}",
+    		source: "(353:6) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (273:6) {#each filterTodos(filter, todos) as todo (todo.id)}
+    // (349:6) {#each filterTodos(filter, todos) as todo (todo.id)}
     function create_each_block(key_1, ctx) {
     	let li;
     	let todo;
@@ -2245,7 +2248,7 @@ var app = (function () {
     	let current;
 
     	todo = new Todo({
-    			props: { todo: /*todo*/ ctx[26] },
+    			props: { todo: /*todo*/ ctx[28] },
     			$$inline: true
     		});
 
@@ -2260,7 +2263,7 @@ var app = (function () {
     			create_component(todo.$$.fragment);
     			t = space();
     			attr_dev(li, "class", "todo");
-    			add_location(li, file$2, 273, 8, 10189);
+    			add_location(li, file$2, 349, 8, 13051);
     			this.first = li;
     		},
     		m: function mount(target, anchor) {
@@ -2272,7 +2275,7 @@ var app = (function () {
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
     			const todo_changes = {};
-    			if (dirty & /*filter, todos*/ 3) todo_changes.todo = /*todo*/ ctx[26];
+    			if (dirty & /*filter, todos*/ 3) todo_changes.todo = /*todo*/ ctx[28];
     			todo.$set(todo_changes);
     		},
     		i: function intro(local) {
@@ -2294,7 +2297,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(273:6) {#each filterTodos(filter, todos) as todo (todo.id)}",
+    		source: "(349:6) {#each filterTodos(filter, todos) as todo (todo.id)}",
     		ctx
     	});
 
@@ -2349,7 +2352,7 @@ var app = (function () {
     	/*todosstatus_binding*/ ctx[11](todosstatus);
     	let each_value = /*filterTodos*/ ctx[6](/*filter*/ ctx[1], /*todos*/ ctx[0]);
     	validate_each_argument(each_value);
-    	const get_key = ctx => /*todo*/ ctx[26].id;
+    	const get_key = ctx => /*todo*/ ctx[28].id;
     	validate_each_keys(ctx, each_value, get_each_context, get_key);
 
     	for (let i = 0; i < each_value.length; i += 1) {
@@ -2398,14 +2401,14 @@ var app = (function () {
     			hr = element("hr");
     			t6 = space();
     			create_component(moreactions.$$.fragment);
-    			add_location(h1, file$2, 256, 0, 9687);
+    			add_location(h1, file$2, 332, 0, 12549);
     			attr_dev(ul, "role", "list");
     			attr_dev(ul, "class", "todo-list stack-large");
     			attr_dev(ul, "aria-labelledby", "list-heading");
-    			add_location(ul, file$2, 271, 4, 10042);
-    			add_location(hr, file$2, 281, 4, 10418);
+    			add_location(ul, file$2, 347, 4, 12904);
+    			add_location(hr, file$2, 357, 4, 13280);
     			attr_dev(div, "class", "todoapp stack-large");
-    			add_location(div, file$2, 259, 0, 9740);
+    			add_location(div, file$2, 335, 0, 12602);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2529,12 +2532,18 @@ var app = (function () {
     }
 
     function instance$2($$self, $$props, $$invalidate) {
+    	let $urlInit;
     	let $authToken;
     	let $alert;
+    	let $userId;
+    	validate_store(urlInit, "urlInit");
+    	component_subscribe($$self, urlInit, $$value => $$invalidate(16, $urlInit = $$value));
     	validate_store(authToken, "authToken");
-    	component_subscribe($$self, authToken, $$value => $$invalidate(16, $authToken = $$value));
+    	component_subscribe($$self, authToken, $$value => $$invalidate(17, $authToken = $$value));
     	validate_store(alert, "alert");
-    	component_subscribe($$self, alert, $$value => $$invalidate(17, $alert = $$value));
+    	component_subscribe($$self, alert, $$value => $$invalidate(18, $alert = $$value));
+    	validate_store(userId, "userId");
+    	component_subscribe($$self, userId, $$value => $$invalidate(19, $userId = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("Todos", slots, []);
 
@@ -2575,10 +2584,7 @@ var app = (function () {
     	};
 
     	
-
-    	//  let url = "http:///mint20-loopback4:3000/"
-    	let url = "http:///88.111.150.77:3000/";
-
+    	let url = $urlInit;
     	let { todos = [] } = $$props;
 
     	//    console.log('into Todos.svelte : ', todos)
@@ -2600,113 +2606,171 @@ var app = (function () {
     */
     	function doDelete(todo) {
     		return __awaiter(this, void 0, void 0, function* () {
-    			const res = yield fetch(url + "todos/" + todo.id, {
-    				method: "DELETE",
-    				headers: {
-    					"Content-Type": "application/json",
-    					"Authorization": "Bearer " + $authToken
-    				}
-    			});
+    			let result = false;
 
-    			if (res.status != 204) {
-    				yield res.json().then(json => {
-    					console.log("update todo : ", json);
-    				}).catch(error => {
-    					console.error("UpdateTodo fetch problem:", error);
+    			// no JSON is returned
+    			try {
+    				const res = yield fetch(url + "todos/" + todo.id, {
+    					method: "DELETE",
+    					headers: {
+    						"Content-Type": "application/json",
+    						"Authorization": "Bearer " + $authToken
+    					}
     				});
+
+    				console.log("NORRIS: response is: ", res);
+
+    				if (res.status == 204) {
+    					console.log("Deleted todo : ", todo.id);
+    					result = true;
+    				}
+    			} catch(error) {
+    				console.error("Delete fetch problem:", error);
     			}
+
+    			return result;
     		});
     	}
 
     	function removeTodo(todo) {
-    		$$invalidate(0, todos = todos.filter(t => t.id !== todo.id));
-    		doDelete(todo);
+    		doDelete(todo).then(data => {
+    			console.log("data returned is: ", data);
+
+    			if (data == true) {
+    				$$invalidate(0, todos = todos.filter(t => t.id !== todo.id));
+    				set_store_value(alert, $alert = `Todo '${todo.title}' has been deleted`, $alert);
+    			} else {
+    				set_store_value(alert, $alert = `Todo '${todo.title}' was NOT deleted`, $alert);
+    			}
+    		});
+
     		todosStatus.focus(); // give focus to status heading
-    		set_store_value(alert, $alert = `Todo '${todo.title}' has been deleted`, $alert);
+    		console.log("NORRIS: removeTodo: ", todos);
     	}
 
-    	//    async function doPost (id: number, name: string) {
     	function doPost(name) {
     		return __awaiter(this, void 0, void 0, function* () {
-    			const res = yield fetch(url + "todos/", {
-    				method: "POST",
-    				headers: {
-    					"Content-Type": "application/json",
-    					"Authorization": "Bearer " + $authToken
-    				},
-    				body: JSON.stringify({
-    					//            "id": newTodoId, 
-    					"title": name,
-    					"isComplete": false
-    				})
-    			});
+    			let result = false;
 
-    			if (res.status != 204) {
-    				yield res.json().then(json => {
-    					console.log("add todo : ", json);
-    					console.log("with id of : ", json.id);
-    					newTodoId = json.id;
-    				}).catch(error => {
-    					console.error("AddTodo PUT problem:", error);
+    			try {
+    				const res = yield fetch(url + "user/" + $userId + "/todos", {
+    					method: "POST",
+    					headers: {
+    						"Content-Type": "application/json",
+    						"Authorization": "Bearer " + $authToken
+    					},
+    					body: JSON.stringify({
+    						//            "id": newTodoId, 
+    						"title": name,
+    						"isComplete": false
+    					})
     				});
+
+    				//      if (res.status != 204) {
+    				const json = yield res.json().then(json => {
+    					console.log("doPost: add todo : ", json);
+    					console.log("with id of : ", json.id);
+    					console.log("and status is ", res.status);
+    					newTodoId = json.id;
+    					result = true;
+    				});
+    			} catch(error) {
+    				console.error("AddTodo PUT problem:", error);
     			}
+
+    			//      }
+    			return result;
     		});
     	}
 
+    	// create new todo. Note the use of async. This allows us to make doPost wait until the 
+    	// https fetch is completed to give back the id number for the internal array.
     	function addTodo(name) {
-    		// doing this can cause problems as the array is mutated
-    		//todos.push({ id: newTodoId, name: newTodoName, isComplete: false })
-    		//todos = todos
-    		// doing this creates a new array
-    		console.log("2 into Todos.svelte : ", todos);
+    		return __awaiter(this, void 0, void 0, function* () {
+    			// doing this can cause problems as the array is mutated
+    			//todos.push({ id: newTodoId, name: newTodoName, isComplete: false })
+    			//todos = todos
+    			// doing this creates a new array
+    			console.log("2 into Todos.svelte : ", todos);
 
-    		doPost(name);
-    		set_store_value(alert, $alert = `Todo '${name}' has been added`, $alert);
+    			newTodoId = 0;
 
-    		// finally update array
-    		$$invalidate(0, todos = [
-    			...todos,
-    			{
-    				id: newTodoId,
-    				title: name,
-    				isComplete: false
-    			}
-    		]);
+    			yield doPost(name).then(data => {
+    				console.log("data returned is: ", data);
+
+    				if (data == true) {
+    					console.log("NORRIS: the new id is ", newTodoId);
+
+    					$$invalidate(0, todos = [
+    						...todos,
+    						{
+    							id: newTodoId,
+    							title: name,
+    							isComplete: false,
+    							newUserRequestId: $userId
+    						}
+    					]);
+
+    					set_store_value(alert, $alert = `Todo '${name}' has been added`, $alert);
+    				} else {
+    					set_store_value(alert, $alert = `Todo '${name}' has NOT been added`, $alert);
+    				}
+    			});
+
+    			// finally update array
+    			console.log("NORRIS: addTodo: ", todos);
+    		});
     	}
 
     	function doPut(todo) {
     		return __awaiter(this, void 0, void 0, function* () {
-    			const res = yield fetch(url + "todos/" + todo.id, {
-    				method: "PUT",
-    				headers: {
-    					"Content-Type": "application/json",
-    					"Authorization": "Bearer " + $authToken
-    				},
-    				body: JSON.stringify({
-    					"title": todo.title,
-    					"isComplete": todo.isComplete
-    				})
-    			});
+    			let result = false;
 
-    			console.log("update todo status : ", res.status);
-
-    			if (res.status != 204) {
-    				yield res.json().then(json => {
-    					console.log("update todo : ", json);
-    				}).catch(error => {
-    					console.error("UpdateTodo doPut problem:", error);
+    			// no JSON is returned
+    			try {
+    				const res = yield fetch(url + "todos/" + todo.id, {
+    					method: "PUT",
+    					headers: {
+    						"Content-Type": "application/json",
+    						"Authorization": "Bearer " + $authToken
+    					},
+    					body: JSON.stringify({
+    						"title": todo.title,
+    						"isComplete": todo.isComplete,
+    						"newUserRequestId": todo.newUserRequestId
+    					})
     				});
+
+    				console.log("update todo status : ", res.status);
+
+    				if (res.status == 204) {
+    					console.log("update todo : ", todo.id);
+    					result = true;
+    				}
+    			} catch(error) {
+    				console.error("UpdateTodo doPut problem:", error);
     			}
+
+    			return result;
     		});
     	}
 
     	function updateTodo(todo) {
-    		const i = todos.findIndex(t => t.id === todo.id);
-    		if (todos[i].title !== todo.title) set_store_value(alert, $alert = `todo '${todos[i].title}' has been renamed to '${todo.title}'`, $alert);
-    		if (todos[i].isComplete !== todo.isComplete) set_store_value(alert, $alert = `todo '${todos[i].title}' marked as ${todo.isComplete ? "completed" : "active"}`, $alert);
-    		$$invalidate(0, todos[i] = Object.assign(Object.assign({}, todos[i]), todo), todos);
-    		console.log("UpdateTodo: about to call doPut with token of : ", $authToken);
-    		doPut(todo);
+    		console.log("NORRIS: updateTodo: ", todos);
+
+    		doPut(todo).then(data => {
+    			const i = todos.findIndex(t => t.id === todo.id);
+
+    			if (data == true) {
+    				if (todos[i].title !== todo.title) set_store_value(alert, $alert = `todo '${todos[i].title}' has been renamed to '${todo.title}'`, $alert);
+    				if (todos[i].isComplete !== todo.isComplete) set_store_value(alert, $alert = `todo '${todos[i].title}' marked as ${todo.isComplete ? "completed" : "active"}`, $alert);
+    				$$invalidate(0, todos[i] = Object.assign(Object.assign({}, todos[i]), todo), todos);
+    			} else {
+    				if (todos[i].title !== todo.title) set_store_value(alert, $alert = `todo '${todos[i].title}' has NOT been renamed to '${todo.title}'`, $alert);
+    				if (todos[i].isComplete !== todo.isComplete) set_store_value(alert, $alert = `todo '${todos[i].title}' NOT marked as ${todo.isComplete ? "completed" : "active"}`, $alert);
+    			}
+    		});
+
     		console.log("UpdateTodo: completed doPut");
     	}
 
@@ -2734,71 +2798,101 @@ var app = (function () {
     */
     	function doCheckAllTodos(completed) {
     		return __awaiter(this, void 0, void 0, function* () {
-    			let where = JSON.stringify({ "isComplete": !completed });
+    			let result = false;
 
-    			const res = yield fetch(url + "todos?where=" + where, {
-    				method: "PATCH",
-    				headers: {
-    					"Content-Type": "application/json",
-    					"Authorization": "Bearer " + $authToken
-    				},
-    				body: JSON.stringify({ "isComplete": completed })
+    			let where = JSON.stringify({
+    				"isComplete": !completed,
+    				"newUserRequestId": $userId
     			});
 
-    			console.log("doCheckAllTodos todo status : ", res.status);
+    			try {
+    				const res = yield fetch(url + "todos?where=" + where, {
+    					method: "PATCH",
+    					headers: {
+    						"Content-Type": "application/json",
+    						"Authorization": "Bearer " + $authToken
+    					},
+    					body: JSON.stringify({ "isComplete": completed })
+    				});
 
-    			yield res.json().then(json => {
-    				console.log("doCheckAllTodos count : ", json.count);
-    			}).catch(error => {
-    				if (res.status != 200) {
-    					console.error("doCheckAllTodos HTTP problem:", error);
-    				}
-    			});
+    				console.log("doCheckAllTodos todo status : ", res.status);
+
+    				const json = yield res.json().then(json => {
+    					console.log("doCheckAllTodos count : ", json.count);
+    					result = true;
+    				});
+    			} catch(error) {
+    				console.error("doCheckAllTodos HTTP problem:", error);
+    			}
+
+    			return result;
     		});
     	}
 
     	const checkAllTodos = completed => {
-    		todos.forEach(t => t.isComplete = completed);
-    		$$invalidate(0, todos = [...todos]);
-    		doCheckAllTodos(completed);
-    		set_store_value(alert, $alert = `${completed ? "Checked" : "Unchecked"} ${todos.length} todos`, $alert);
+    		doCheckAllTodos(completed).then(data => {
+    			if (data == true) {
+    				todos.forEach(t => t.isComplete = completed);
+    				$$invalidate(0, todos = [...todos]);
+    				console.log("NORRIS: checkAllTodos: ", todos);
+    				set_store_value(alert, $alert = `${completed ? "Checked" : "Unchecked"} ${todos.length} todos`, $alert);
+    			} else {
+    				set_store_value(alert, $alert = `${completed ? "Checked" : "Unchecked"} did not happen`, $alert);
+    			}
+    		});
     	};
 
     	function doDeleteAllCompletedTodos() {
     		return __awaiter(this, void 0, void 0, function* () {
-    			let where = JSON.stringify({ "isComplete": true });
+    			let result = false;
 
-    			const res = yield fetch(url + "todos?where=" + where, {
-    				method: "DELETE",
-    				headers: {
-    					"Content-Type": "application/json",
-    					"Authorization": "Bearer " + $authToken
-    				}
+    			let where = JSON.stringify({
+    				"isComplete": true,
+    				"newUserRequestId": $userId
     			});
 
-    			console.log("doDeleteAllCompletedTodos todo status : ", res.status);
+    			try {
+    				const res = yield fetch(url + "todos?where=" + where, {
+    					method: "DELETE",
+    					headers: {
+    						"Content-Type": "application/json",
+    						"Authorization": "Bearer " + $authToken
+    					}
+    				});
 
-    			yield res.json().then(json => {
-    				console.log("doDeleteAllCompletedTodos count : ", json.count);
-    			}).catch(error => {
-    				if (res.status != 200) {
-    					console.error("doDeleteAllCompletedTodos HTTP problem:", error);
-    				}
-    			});
+    				console.log("doDeleteAllCompletedTodos todo status : ", res.status);
+
+    				const json = yield res.json().then(json => {
+    					console.log("doDeleteAllCompletedTodos count : ", json.count);
+    					result = true;
+    				});
+    			} catch(error) {
+    				console.error("doDeleteAllCompletedTodos HTTP problem:", error);
+    			}
+
+    			return result;
     		});
     	}
 
     	const removeCompletedTodos = () => {
-    		set_store_value(alert, $alert = `Removed ${todos.filter(t => t.isComplete).length} todos`, $alert);
-    		$$invalidate(0, todos = todos.filter(t => !t.isComplete));
-    		doDeleteAllCompletedTodos();
+    		doDeleteAllCompletedTodos().then(data => {
+    			if (data == true) {
+    				let temp = todos.filter(t => t.isComplete).length;
+    				$$invalidate(0, todos = todos.filter(t => !t.isComplete));
+    				console.log("NORRIS: removeCompletedTodos: ", todos);
+    				set_store_value(alert, $alert = `Removed ${temp} todos`, $alert);
+    			} else {
+    				set_store_value(alert, $alert = `Error: removed no todos`, $alert);
+    			}
+    		});
     	};
 
     	function getAllTodos() {
     		return __awaiter(this, void 0, void 0, function* () {
-    			console.log("auth token is : ", $authToken);
+    			let temp = url + "user/" + $userId + "/todos";
+    			console.log(`NORRIS: url will be ${temp}`);
 
-    			const res = yield fetch(url + "todos", {
+    			const res = yield fetch(url + "user/" + $userId + "/todos", {
     				method: "GET",
     				headers: {
     					"Content-Type": "application/json",
@@ -2813,9 +2907,16 @@ var app = (function () {
     			console.log("todolist : ", json);
 
     			json.forEach(element => {
-    				let t = { id: 0, title: "0", isComplete: true };
+    				let t = {
+    					id: 0,
+    					title: "0",
+    					isComplete: true,
+    					newUserRequestId: "0"
+    				};
+
     				t.id = element.id;
     				t.title = element.title;
+    				t.newUserRequestId = element.newUserRequestId;
 
     				if (element.isComplete === undefined) {
     					t.isComplete = false;
@@ -2826,7 +2927,9 @@ var app = (function () {
     				// this updates the DOM
     				$$invalidate(0, todos = [...todos, t]);
     			});
-    		}); //    console.log('completed mount : ', todos)
+
+    			console.log("NORRIS: completed mount : ", todos);
+    		});
     	}
 
     	onMount(() => {
@@ -2872,6 +2975,8 @@ var app = (function () {
     		Filter,
     		onMount,
     		authToken,
+    		userId,
+    		urlInit,
     		url,
     		todos,
     		todosStatus,
@@ -2889,8 +2994,10 @@ var app = (function () {
     		doDeleteAllCompletedTodos,
     		removeCompletedTodos,
     		getAllTodos,
+    		$urlInit,
     		$authToken,
-    		$alert
+    		$alert,
+    		$userId
     	});
 
     	$$self.$inject_state = $$props => {
@@ -2909,7 +3016,7 @@ var app = (function () {
     	$$self.$$.update = () => {
     		if ($$self.$$.dirty & /*filter*/ 2) {
     			{
-    				if (filter === Filter.ALL) set_store_value(alert, $alert = "Browsing all todos", $alert); else if (filter === Filter.ACTIVE) set_store_value(alert, $alert = "Browsing active todos", $alert); else if (filter === Filter.COMPLETED) set_store_value(alert, $alert = "Browsing completed todos", $alert);
+    				if (filter === Filter.ALL) set_store_value(alert, $alert = "Browsing all my todos", $alert); else if (filter === Filter.ACTIVE) set_store_value(alert, $alert = "Browsing my active todos", $alert); else if (filter === Filter.COMPLETED) set_store_value(alert, $alert = "Browsing my completed todos", $alert);
     			}
     		}
     	};
@@ -3246,7 +3353,7 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file = "src\\App.svelte";
 
-    // (80:1) {#if !authorised}
+    // (84:1) {#if !authorised}
     function create_if_block_1(ctx) {
     	let h2;
     	let t1;
@@ -3280,33 +3387,33 @@ var app = (function () {
     			div = element("div");
     			form = element("form");
     			label0 = element("label");
-    			t3 = text("Email:\n        ");
+    			t3 = text("Email:\r\n        ");
     			input0 = element("input");
     			t4 = space();
     			label1 = element("label");
-    			t5 = text("Password:\n        ");
+    			t5 = text("Password:\r\n        ");
     			input1 = element("input");
     			t6 = space();
     			button = element("button");
     			t7 = text("Login");
     			t8 = space();
     			if (if_block) if_block.c();
-    			add_location(h2, file, 80, 2, 2550);
-    			add_location(br, file, 81, 1, 2583);
+    			add_location(h2, file, 84, 2, 2734);
+    			add_location(br, file, 85, 1, 2768);
     			attr_dev(input0, "type", "email");
-    			add_location(input0, file, 86, 8, 2728);
-    			add_location(label0, file, 84, 6, 2697);
+    			add_location(input0, file, 90, 8, 2918);
+    			add_location(label0, file, 88, 6, 2885);
     			attr_dev(input1, "type", "password");
-    			add_location(input1, file, 90, 8, 2827);
-    			add_location(label1, file, 88, 6, 2793);
+    			add_location(input1, file, 94, 8, 3021);
+    			add_location(label1, file, 92, 6, 2985);
     			attr_dev(button, "type", "submit");
     			button.disabled = button_disabled_value = /*password*/ ctx[0] == "" || /*email*/ ctx[1] == "";
     			attr_dev(button, "class", "btn");
-    			add_location(button, file, 92, 6, 2898);
+    			add_location(button, file, 96, 6, 3094);
     			attr_dev(form, "method", "post");
-    			add_location(form, file, 83, 4, 2629);
+    			add_location(form, file, 87, 4, 2816);
     			attr_dev(div, "class", "todoapp stack-large");
-    			add_location(div, file, 82, 3, 2591);
+    			add_location(div, file, 86, 3, 2777);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h2, anchor);
@@ -3382,14 +3489,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(80:1) {#if !authorised}",
+    		source: "(84:1) {#if !authorised}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (95:4) {#if error}
+    // (99:4) {#if error}
     function create_if_block_2(ctx) {
     	let p;
     	let t0;
@@ -3410,9 +3517,9 @@ var app = (function () {
     			br = element("br");
     			t3 = space();
     			t4 = text(t4_value);
-    			add_location(br, file, 95, 58, 3072);
+    			add_location(br, file, 99, 58, 3271);
     			attr_dev(p, "class", "error-mess svelte-1ju2a49");
-    			add_location(p, file, 95, 5, 3019);
+    			add_location(p, file, 99, 5, 3218);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -3436,14 +3543,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2.name,
     		type: "if",
-    		source: "(95:4) {#if error}",
+    		source: "(99:4) {#if error}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (102:2) {#if authorised}
+    // (106:2) {#if authorised}
     function create_if_block(ctx) {
     	let h2;
     	let t1;
@@ -3488,11 +3595,11 @@ var app = (function () {
     			create_component(alert.$$.fragment);
     			t5 = space();
     			create_component(todos_1.$$.fragment);
-    			add_location(h2, file, 103, 4, 3197);
-    			add_location(br, file, 104, 4, 3224);
+    			add_location(h2, file, 107, 4, 3404);
+    			add_location(br, file, 108, 4, 3432);
     			attr_dev(button, "class", "btn");
-    			add_location(button, file, 106, 6, 3245);
-    			add_location(div, file, 105, 4, 3233);
+    			add_location(button, file, 110, 6, 3455);
+    			add_location(div, file, 109, 4, 3442);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h2, anchor);
@@ -3553,7 +3660,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(102:2) {#if authorised}",
+    		source: "(106:2) {#if authorised}",
     		ctx
     	});
 
@@ -3650,9 +3757,15 @@ var app = (function () {
     }
 
     function instance($$self, $$props, $$invalidate) {
+    	let $urlInit;
     	let $authToken;
+    	let $userId;
+    	validate_store(urlInit, "urlInit");
+    	component_subscribe($$self, urlInit, $$value => $$invalidate(10, $urlInit = $$value));
     	validate_store(authToken, "authToken");
-    	component_subscribe($$self, authToken, $$value => $$invalidate(10, $authToken = $$value));
+    	component_subscribe($$self, authToken, $$value => $$invalidate(11, $authToken = $$value));
+    	validate_store(userId, "userId");
+    	component_subscribe($$self, userId, $$value => $$invalidate(12, $userId = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("App", slots, []);
 
@@ -3698,9 +3811,7 @@ var app = (function () {
     	let error;
     	let authorised = false;
     	let todos = [];
-
-    	//let url = "http:///mint20-loopback4:3000/"
-    	let url = "http://88.111.150.77:3000/";
+    	let url = $urlInit;
 
     	const handleLogin = () => __awaiter(void 0, void 0, void 0, function* () {
     		const response = yield fetch(url + "users/login", {
@@ -3713,19 +3824,20 @@ var app = (function () {
 
     		//	  console.log(parsed)
     		//	  console.log("NORRIS: reply received")
-    		if (parsed.token) {
+    		if (parsed.token && parsed.userid) {
     			set_store_value(authToken, $authToken = parsed.token, $authToken);
+    			set_store_value(userId, $userId = parsed.userid, $userId);
     			$$invalidate(3, authorised = true);
     			$$invalidate(1, email = "");
     			$$invalidate(0, password = "");
+    			console.log("NORRIS: token is " + $authToken);
+    			console.log("NORRIS: user id is " + $userId);
     		} else {
     			console.log(parsed.error);
     			$$invalidate(2, error = parsed.error);
     			$$invalidate(1, email = "");
     			$$invalidate(0, password = "");
     		}
-
-    		console.log("NORRIS: " + $authToken);
     	});
 
     	/*   async function doLogout () {
@@ -3748,7 +3860,10 @@ var app = (function () {
         } */
     	function logout() {
     		set_store_value(authToken, $authToken = "", $authToken);
+    		set_store_value(userId, $userId = "", $userId);
     		$$invalidate(3, authorised = false);
+    		$$invalidate(4, todos = []);
+    		console.log("user is logged out. Userid is now: ", $userId);
     	}
 
     	const writable_props = [];
@@ -3778,6 +3893,8 @@ var app = (function () {
     		Alert,
     		onMount,
     		authToken,
+    		userId,
+    		urlInit,
     		password,
     		email,
     		error,
@@ -3786,7 +3903,9 @@ var app = (function () {
     		url,
     		handleLogin,
     		logout,
-    		$authToken
+    		$urlInit,
+    		$authToken,
+    		$userId
     	});
 
     	$$self.$inject_state = $$props => {

@@ -6,6 +6,9 @@ import { writable } from 'svelte/store'
 export const alert = writable('Welcome to the To-Do list app!')
 
 export const authToken = writable('')
+export const userId = writable('')
+export const urlInit = writable("https://mint20-loopback4:3000/")
+//  export const url = writable("https://88.111.150.77:3000/")
 
 // read the database now
 /* let initialTodos: TodoType[] = []

@@ -2,7 +2,7 @@
 	import Todos from './components/Todos.svelte'
 	import Alert from './components/Alert.svelte'
   import { onMount } from 'svelte'
-	import { authToken } from './stores'
+	import { authToken, userId, urlInit } from './stores'
   import type { TodoType } from './types/todo.type'
 
   let password = ""
@@ -10,8 +10,7 @@
 	let error
 	let authorised = false
   let todos: TodoType[] = []
-  //let url = "https:///mint20-loopback4:3000/"
-  let url = "https://88.111.150.77:3000/"
+  let url = $urlInit
 
 	const handleLogin = async () => {
 	  const response = await fetch(url + 'users/login', {
@@ -26,19 +25,22 @@
 
 //	  console.log(parsed)
 //	  console.log("NORRIS: reply received")
- 	  if (parsed.token) {
+ 	  if (parsed.token && parsed.userid) {
       $authToken = parsed.token
+      $userId = parsed.userid
       authorised = true
       email = ""
       password = ""
-	  } else {
+	    console.log("NORRIS: token is " + $authToken)
+      console.log("NORRIS: user id is " + $userId)	
+    } else {
       console.log(parsed.error)
       error = parsed.error
       email = ""
       password = ""
 	  } 
 
-	  console.log("NORRIS: " + $authToken)
+
   }
 
 /*   async function doLogout () {
@@ -62,8 +64,10 @@
 
 	function logout() {
 		$authToken = ''
+    $userId = ''
 		authorised = false
-
+    todos = []
+    console.log('user is logged out. Userid is now: ', $userId)
   }
 
 
