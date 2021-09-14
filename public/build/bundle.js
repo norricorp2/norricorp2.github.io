@@ -2378,7 +2378,7 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			h1 = element("h1");
-    			h1.textContent = "Svelte To-Do list";
+    			h1.textContent = "Svelte To-Do List";
     			t1 = space();
     			div = element("div");
     			create_component(newtodo.$$.fragment);
@@ -3401,15 +3401,17 @@ var app = (function () {
     			add_location(h2, file, 84, 2, 2734);
     			add_location(br, file, 85, 1, 2768);
     			attr_dev(input0, "type", "email");
+    			attr_dev(input0, "name", "username");
     			add_location(input0, file, 90, 8, 2918);
     			add_location(label0, file, 88, 6, 2885);
     			attr_dev(input1, "type", "password");
-    			add_location(input1, file, 94, 8, 3021);
-    			add_location(label1, file, 92, 6, 2985);
+    			attr_dev(input1, "name", "passwd");
+    			add_location(input1, file, 94, 8, 3037);
+    			add_location(label1, file, 92, 6, 3001);
     			attr_dev(button, "type", "submit");
     			button.disabled = button_disabled_value = /*password*/ ctx[0] == "" || /*email*/ ctx[1] == "";
     			attr_dev(button, "class", "btn");
-    			add_location(button, file, 96, 6, 3094);
+    			add_location(button, file, 96, 6, 3124);
     			attr_dev(form, "method", "post");
     			add_location(form, file, 87, 4, 2816);
     			attr_dev(div, "class", "todoapp stack-large");
@@ -3517,9 +3519,9 @@ var app = (function () {
     			br = element("br");
     			t3 = space();
     			t4 = text(t4_value);
-    			add_location(br, file, 99, 58, 3271);
+    			add_location(br, file, 99, 58, 3301);
     			attr_dev(p, "class", "error-mess svelte-1ju2a49");
-    			add_location(p, file, 99, 5, 3218);
+    			add_location(p, file, 99, 5, 3248);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -3595,11 +3597,11 @@ var app = (function () {
     			create_component(alert.$$.fragment);
     			t5 = space();
     			create_component(todos_1.$$.fragment);
-    			add_location(h2, file, 107, 4, 3404);
-    			add_location(br, file, 108, 4, 3432);
+    			add_location(h2, file, 107, 4, 3434);
+    			add_location(br, file, 108, 4, 3462);
     			attr_dev(button, "class", "btn");
-    			add_location(button, file, 110, 6, 3455);
-    			add_location(div, file, 109, 4, 3442);
+    			add_location(button, file, 110, 6, 3485);
+    			add_location(div, file, 109, 4, 3472);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h2, anchor);

@@ -328,7 +328,7 @@
 
 </script>
 
-<h1>Svelte To-Do list</h1>
+<h1>Svelte To-Do List</h1>
 
 <!-- Todos.svelte -->
 <div class="todoapp stack-large">

@@ -7,13 +7,15 @@
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "validate": "svelte-check",
-    "deploy": "node ./gh-pages.js"
+    "deploy": "node ./gh-pages.js",
+    "cypress:open": "cypress open"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-typescript": "^8.0.0",
     "@tsconfig/svelte": "^1.0.0",
+    "cypress": "^8.3.1",
     "gh-pages": "^3.2.3",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",

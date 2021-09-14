@@ -89,11 +89,11 @@
     <form on:submit|preventDefault="{handleLogin}" method="post">
       <label>
         Email:
-        <input type="email" bind:value="{email}" />
+        <input type="email" name="username" bind:value="{email}" />
       </label>
       <label>
         Password:
-        <input type="password" bind:value="{password}" />
+        <input type="password" name="passwd" bind:value="{password}" />
       </label>
       <button type="submit" disabled={password == "" || email==""} class="btn">Login</button>
     </form>
