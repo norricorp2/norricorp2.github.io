@@ -49,11 +49,9 @@ describe('Add Todo', () => {
 
       cy.get('[role=list]').find('li').its('length').should('be.eq', 1)
 
+      cy.contains('Log Out').click()
+
       
-
-
-
-
     }) // end of it
   })
 

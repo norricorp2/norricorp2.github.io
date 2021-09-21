@@ -109,7 +109,7 @@
     <h2>Loopback Todo</h2>
     <br>
     <div>
-      <button class="btn" on:click={logout}>Log Out</button>
+      <button name="logout" class="btn" on:click={logout}>Log Out</button>
     </div>
 
     <Alert />
