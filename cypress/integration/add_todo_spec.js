@@ -27,6 +27,8 @@ describe('Add Todo', () => {
       // {enter} causes the form to submit
       cy.get('input[id=todo-0]').type(`get cypress testing completed{enter}`)
 
+      cy.wait(2000)
+
       cy.get('[role=list]').find('li').as('todos')
 
       // UI should reflect this new todo as final entry
@@ -44,7 +46,7 @@ describe('Add Todo', () => {
       cy.contains('Remove completed').click()
 
       // sleep to allow screen to update and list to reflect change
-      cy.wait(2000)
+      cy.wait(3000)
 
 
       cy.get('[role=list]').find('li').its('length').should('be.eq', 1)

@@ -78,7 +78,7 @@
         <button type="button" class="btn" on:click={onEdit} use:focusEditButton>
           Edit<span class="visually-hidden"> {todo.title}</span>
         </button>
-        <button type="button" class="btn btn__danger" on:click={onRemove}>
+        <button type="button" class="btn btn__danger" id="delete-{todo.id}" on:click={onRemove}>
           Delete<span class="visually-hidden"> {todo.title}</span>
         </button>
       </div>

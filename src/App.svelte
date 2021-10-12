@@ -2,7 +2,7 @@
 	import Todos from './components/Todos.svelte'
 	import Alert from './components/Alert.svelte'
   import { onMount } from 'svelte'
-	import { authToken, userId, urlInit } from './stores'
+	import { authToken, userId, emailName, urlInit } from './stores'
   import type { TodoType } from './types/todo.type'
 
   let password = ""
@@ -28,11 +28,13 @@
  	  if (parsed.token && parsed.userid) {
       $authToken = parsed.token
       $userId = parsed.userid
+      $emailName = email
       authorised = true
-      email = ""
+//      email = ""
       password = ""
 	    console.log("NORRIS: token is " + $authToken)
       console.log("NORRIS: user id is " + $userId)	
+      console.log("NORRIS: email is " + $emailName)
     } else {
       console.log(parsed.error)
       error = parsed.error
@@ -65,6 +67,8 @@
 	function logout() {
 		$authToken = ''
     $userId = ''
+    $emailName = ''
+    email = ''
 		authorised = false
     todos = []
     console.log('user is logged out. Userid is now: ', $userId)

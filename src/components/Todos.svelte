@@ -8,7 +8,7 @@
   import type { TodoType } from '../types/todo.type'
   import { Filter } from '../types/filter.enum'
   import { onMount } from 'svelte'
-  import { authToken, userId, urlInit } from '../stores'
+  import { authToken, userId, emailName, urlInit } from '../stores'
 
   let url = $urlInit
 
@@ -24,6 +24,8 @@
     let todosStatus: TodosStatus                   // reference to TodosStatus instance
 
     let newTodoId: number
+
+    let username = $emailName
 //    $: newTodoId = todos.length ? Math.max(...todos.map(t => t.id)) + 1 : 1
 /*    $: {
       if (totalTodos === 0) {
@@ -158,10 +160,10 @@
       return result
     }
 
-    function updateTodo(todo: TodoType) {
+    async function updateTodo(todo: TodoType) {
 
       console.log('NORRIS: updateTodo: ', todos)
-      doPut(todo).then((data: boolean) => {
+      await doPut(todo).then((data: boolean) => {
         const i = todos.findIndex(t => t.id === todo.id)
         if (data == true) {
           if (todos[i].title !== todo.title)            $alert = `todo '${todos[i].title}' has been renamed to '${todo.title}'`
@@ -262,6 +264,7 @@
         console.log('doDeleteAllCompletedTodos todo status : ', res.status)
         const json = await res.json()
         .then(json => {console.log('doDeleteAllCompletedTodos count : ', json.count)
+                      console.log('doDeleteAllCompletedTodos json : ', json)
                       result = true
                       })
     } catch(error) {
@@ -270,10 +273,11 @@
       return result
     }
 
+    
+//    const removeCompletedTodos = () => {
+  async function removeCompletedTodos() {
 
-    const removeCompletedTodos = () => {
-
-      doDeleteAllCompletedTodos().then((data: boolean) => {
+   await doDeleteAllCompletedTodos().then((data: boolean) => {
         if (data == true) {
           let temp = todos.filter(t => t.isComplete).length
           todos = todos.filter(t => !t.isComplete)
@@ -328,7 +332,7 @@
 
 </script>
 
-<h1>Svelte To-Do List</h1>
+<h1>Svelte To-Do List for {username}</h1>
 
 <!-- Todos.svelte -->
 <div class="todoapp stack-large">
