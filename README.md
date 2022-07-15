@@ -25,7 +25,10 @@ cd svelte-app
 npm install
 ```
 
-...then start [Rollup](https://rollupjs.org):
+...then start [Rollup](https://rollupjs.org): make sure you are on G: DRIVE!!
+to get access from outside localhost add 
+"start": "sirv public --no-clear --host 0.0.0.0",
+to package.json file
 
 ```bash
 npm run dev

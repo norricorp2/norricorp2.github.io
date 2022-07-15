@@ -7,7 +7,7 @@
 
   let password = ""
 	let email = ""
-	let error
+	let error = null
 	let authorised = false
   let todos: TodoType[] = []
   let url = $urlInit
@@ -68,6 +68,7 @@
 		$authToken = ''
     $userId = ''
     $emailName = ''
+    error = null
     email = ''
 		authorised = false
     todos = []
