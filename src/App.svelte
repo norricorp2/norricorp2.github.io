@@ -2,15 +2,29 @@
 	import Todos from './components/Todos.svelte'
 	import Alert from './components/Alert.svelte'
   import { onMount } from 'svelte'
-	import { authToken, userId, emailName, urlInit } from './stores'
+	import { authToken, userId, emailName, urlInit, authorised } from './stores'
   import type { TodoType } from './types/todo.type'
 
   let password = ""
 	let email = ""
 	let error = null
-	let authorised = false
+	//let authorised = false
   let todos: TodoType[] = []
   let url = $urlInit
+
+  if (window.Cypress) {
+    window.authorised.set($authorised)          // only if Cypress is running
+    window.authToken.set($authToken)
+    window.userId.set($userId)
+    window.emailName.set($emailName)
+  }
+  
+  console.log("NORRIS: entering App")
+  console.log("NORRIS: token is " + $authToken)
+  console.log("NORRIS: user id is " + $userId)	
+  console.log("NORRIS: email is " + $emailName)
+  console.log("NORRIS: authosied is " + $authorised)
+
 
 	const handleLogin = async () => {
 	  const response = await fetch(url + 'users/login', {
@@ -29,7 +43,7 @@
       $authToken = parsed.token
       $userId = parsed.userid
       $emailName = email
-      authorised = true
+      $authorised = true
 //      email = ""
       password = ""
 	    console.log("NORRIS: token is " + $authToken)
@@ -70,7 +84,7 @@
     $emailName = ''
     error = null
     email = ''
-		authorised = false
+		$authorised = false
     todos = []
     console.log('user is logged out. Userid is now: ', $userId)
   }
