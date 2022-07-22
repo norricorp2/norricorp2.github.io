@@ -4,10 +4,10 @@ import App from './App.svelte';
 declare global {
 	interface Window {
 	  Cypress?: Cypress.Cypress
-	  authorised?: Writable<Boolean>
-	  authToken?: Writable<String>
-	  userId?: Writable<String>
-	  emailName?: Writable<String>
+	  authorised?: Writable<boolean>
+	  authToken?: Writable<string>
+	  userId?: Writable<string>
+	  emailName?: Writable<string>
 	}
 }
 
