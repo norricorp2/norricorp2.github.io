@@ -10,7 +10,7 @@ export const userId = writable('')
 export const urlInit = writable("https://mint20-loopback4:3000/")
 //  export const urlInit = writable("https://88.111.150.77:3000/")
 export const emailName = writable('')
-export const authorised = writable<Boolean>(false)
+export const authorised = writable(false)
 
 // read the database now
 /* let initialTodos: TodoType[] = []
