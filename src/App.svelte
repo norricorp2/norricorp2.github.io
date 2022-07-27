@@ -2,15 +2,30 @@
 	import Todos from './components/Todos.svelte'
 	import Alert from './components/Alert.svelte'
   import { onMount } from 'svelte'
-	import { authToken, userId, emailName, urlInit } from './stores'
+	import { authToken, userId, emailName, urlInit, authorised } from './stores'
   import type { TodoType } from './types/todo.type'
 
   let password = ""
 	let email = ""
 	let error = null
-	let authorised = false
+	//let authorised = false
   let todos: TodoType[] = []
   let url = $urlInit
+
+  if (window.Cypress) {
+    console.log("NORRIS: entering Cypress selection")
+    $authorised = window.authorised
+    $emailName = window.emailName
+    $authToken = window.authToken
+    $userId = window.userId
+  }
+  
+  console.log("NORRIS: entering App")
+  console.log("NORRIS: token is " + $authToken)
+  console.log("NORRIS: user id is " + $userId)	
+  console.log("NORRIS: email is " + $emailName)
+  console.log("NORRIS: authosied is " + $authorised)
+
 
 	const handleLogin = async () => {
 	  const response = await fetch(url + 'users/login', {
@@ -29,7 +44,7 @@
       $authToken = parsed.token
       $userId = parsed.userid
       $emailName = email
-      authorised = true
+      $authorised = true
 //      email = ""
       password = ""
 	    console.log("NORRIS: token is " + $authToken)
@@ -70,7 +85,7 @@
     $emailName = ''
     error = null
     email = ''
-		authorised = false
+		$authorised = false
     todos = []
     console.log('user is logged out. Userid is now: ', $userId)
   }
@@ -87,7 +102,7 @@
 
   
 
-	{#if !authorised}
+	{#if !$authorised}
   <h2>Login to Loopback Todo</h2>
 	<br>
   	<div class="todoapp stack-large">
@@ -109,7 +124,7 @@
   {/if}
 
   
-  {#if authorised}
+  {#if $authorised}
 <!--    <p>auth token is {$authToken}</p> -->
     <h2>Loopback Todo</h2>
     <br>
