@@ -13,10 +13,11 @@
   let url = $urlInit
 
   if (window.Cypress) {
-    window.authorised.set($authorised)          // only if Cypress is running
-    window.authToken.set($authToken)
-    window.userId.set($userId)
-    window.emailName.set($emailName)
+    console.log("NORRIS: entering Cypress selection")
+    $authorised = window.authorised
+    $emailName = window.emailName
+    $authToken = window.authToken
+    $userId = window.userId
   }
   
   console.log("NORRIS: entering App")
@@ -101,7 +102,7 @@
 
   
 
-	{#if !authorised}
+	{#if !$authorised}
   <h2>Login to Loopback Todo</h2>
 	<br>
   	<div class="todoapp stack-large">
@@ -123,7 +124,7 @@
   {/if}
 
   
-  {#if authorised}
+  {#if $authorised}
 <!--    <p>auth token is {$authToken}</p> -->
     <h2>Loopback Todo</h2>
     <br>
